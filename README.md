@@ -1,0 +1,1 @@
+JavaCV 使用计算机视觉领域研究人员常用库（OpenCV、FFmpeg、libdc1394、FlyCapture、Spinnaker、OpenKinect、librealsense、CL PS3 Eye Driver、videoInput、ARToolKitPlus、flandmark、Leptonica 和 Tesseract）的 JavaCPP 预设中的包装器） 并提供实用程序类，使其功能更易于在 Java 平台（包括 Android）上使用。
