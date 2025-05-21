@@ -1,1 +1,14 @@
-JavaCV 使用计算机视觉领域研究人员常用库（OpenCV、FFmpeg、libdc1394、FlyCapture、Spinnaker、OpenKinect、librealsense、CL PS3 Eye Driver、videoInput、ARToolKitPlus、flandmark、Leptonica 和 Tesseract）的 JavaCPP 预设中的包装器） 并提供实用程序类，使其功能更易于在 Java 平台（包括 Android）上使用。
+JavaCV 使用计算机视觉领域研究人员常用库的 JavaCPP 预设中的包装器） 并提供实用程序类，使其功能更易于在 Java 平台（包括 Android）上使用。
+- OpenCV 图像处理
+- FFmpeg 音视频处理
+- libdc1394 相机控制 https://damien.douxchamps.net/ieee1394/libdc1394/
+- FlyCapture 来自 PGR 的图像采集和相机控制软件
+- Spinnaker  FLIR 的图像采集和热像仪控制软件
+- OpenKinect 用于将 Kinect 用于 Xbox 和 Windows 传感器的开源库
+- librealsense 面向英特尔实感深度和跟踪摄像头的跨平台库
+- CL PS3 Eye Driver
+- videoInput 免费的 Windows 视频捕获库
+- ARToolKitPlus 基于标记的增强现实跟踪库
+- flandmark 面部特征点检测器的开源实现
+- Leptonica 适用于图像处理和图像分析应用的软件
+- Tesseract 可能是可用的最准确的开源 OCR 引擎

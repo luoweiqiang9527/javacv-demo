@@ -3,8 +3,10 @@ package com.allincode;
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.global.opencv_core;
+import org.bytedeco.opencv.global.opencv_imgcodecs;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,39 +57,30 @@ public class Main {
         // You shall NOT call cvReleaseImage(), cvReleaseMemStorage(), etc. on objects allocated this way.
         Mat grayImage = new Mat(height, width, CV_8UC1);
 
-        Mat tempImage = new Mat(height, width, grabbedImage.type());
-
         // CanvasFrame is a JFrame containing a Canvas component, which is hardware accelerated.
         // It can also switch into full-screen mode when called with a screenNumber.
         // We should also specify the relative monitor/camera response for proper gamma correction.
         CanvasFrame frame = new CanvasFrame("Some Title", CanvasFrame.getDefaultGamma() / grabber.getGamma());
-        CanvasFrame tempFrame = new CanvasFrame("TempFarme", CanvasFrame.getDefaultGamma() / grabber.getGamma());
 
         // We can allocate native arrays using constructors taking an integer as argument.
         Point hatPoints = new Point(3);
         while (frame.isVisible() && (grabbedImage = converter.convert(grabber.grab())) != null) {
-            // todo 人脸识别是否太慢，加上判断是否需要人脸识别
-            double compared = compareImage(grabbedImage, tempImage);
-            System.out.println(compared);
-            tempImage = grabbedImage.clone();
-            if (compared <= 10){
-                String message = String.format("图片相似度为%s,90，不进行检测",  compared);
-                System.out.println(message);
-            }else {
-                cvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
-                RectVector faces = new RectVector();
-                classifier.detectMultiScale(grayImage, faces);
-                long total = faces.size();
-                for (long i = 0; i < total; i++) {
-                    Rect r = faces.get(i);
-                    int x = r.x(), y = r.y(), w = r.width(), h = r.height();
-                    rectangle(grabbedImage, new Point(x, y), new Point(x + w, y + h), Scalar.RED, 1, CV_AA, 0);
-                }
+
+            cvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
+            RectVector faces = new RectVector();
+            classifier.detectMultiScale(grayImage, faces);
+            long total = faces.size();
+            for (long i = 0; i < total; i++) {
+                Rect r = faces.get(i);
+                int x = r.x(), y = r.y(), w = r.width(), h = r.height();
+                rectangle(grabbedImage, new Point(x, y), new Point(x + w, y + h), Scalar.RED, 1, CV_AA, 0);
             }
+//            if (total > 0) {
+//                // 输出图像
+//                opencv_imgcodecs.imwrite(System.currentTimeMillis() + ".jpg", grabbedImage);
+//            }
             Frame grabbedFrame = converter.convert(grabbedImage);
-            Frame tempImageFrame = converter.convert(tempImage);
             frame.showImage(grabbedFrame);
-            tempFrame.showImage(tempImageFrame);
         }
 
         frame.dispose();
